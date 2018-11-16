@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+{% include 'top.html'%}
+    <h4 style="color:red"> 这是我的博客地址：天蝎泪</h4>
+    <a href="https://www.cnblogs.com/xdg920/" target="_blank" >天蝎泪-博客园</a>
+    <hr>
+    <h4> 《python自动化框架pytest》 </h4>
+    <p>pytest是最强大最好用的python自动化框架，没有之一。本书详细讲解pytest框架使用方法，fixture功能是pytest的精髓，书中有详细的案例讲解。<br>
+        另外最后会有项目实战代码，灵活用到selenium自动化项目上。<br>
+        pytest交流群874033608
+    </p>
+    <a href="https://yuedu.baidu.com/ebook/902224ab27fff705cc1755270722192e4536582b" target="_blank" >百度阅读地址点此</a>
+
+   <table cellpadding="1" border="1px">
+       <tr style="color:red">
+           <td>one</td>
+           <td>two</td>
+           <td>three</td>
+           <td>{{name}}</td>
+           <td>{{list}}</td>
+       </tr>
+       <tr>
+           <td>good</td>
+           <td>nice</td>
+           <td>perft</td>
+       </tr>
+   </table>
+</p>
+<a href="{%url 'home_page'%}">点击跳转到home页面</a>
+{% include 'end.html' %}
+
+
+</body>
+</html>
