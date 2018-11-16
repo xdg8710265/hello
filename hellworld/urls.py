@@ -34,7 +34,9 @@ urlpatterns = [
     path("home", views.home,name='home_page'),
     url(r'^date/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2}).html$',views.home1),
     url(r'^test$',views.test),
-    url(r'^ubox$',views.ubox),
+    url(r'^ubox$',views.ubox,name='ubox_page'),
     url(r'^base$',views.base),
     url(r'page1/$',views.page1),
+    url(r'mpage',views.mpage),
+
 ]

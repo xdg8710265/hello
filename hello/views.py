@@ -50,6 +50,8 @@ def base(request):
     return render(request,'base.html',data)
 
 def page1(request):
-
     data={"name":"xudegui","city":"shangrao","time":time.strftime("%Y-%m-%d %H:%M:%S")}
     return render(request,'page1.html',data)
+
+def mpage(request):
+    return render(request,'mpage.hmtl')
