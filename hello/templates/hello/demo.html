@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>这是个新的demo页面</title>
 </head>
 <body>
 <p>
@@ -33,8 +33,22 @@
    </table>
 </p>
 <a href="{%url 'home_page'%}">点击跳转到home页面</a>
+{% for b in a %}
+<h3 style="color:green">{{b.name}}</h3>
+{% endfor %}
+
+<div>
+    <from action="" method="post">
+         <input type="text" value="name" placeholder="请输入用户名"/>
+        <input type="button" value="提交"/>
+    </from>
+
+</div>
+
 {% include 'end.html' %}
 
+
+</div>
 
 </body>
 </html>

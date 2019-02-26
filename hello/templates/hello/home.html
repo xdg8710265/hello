@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实现一个遍历循环的操作</title>
+    <style type="text/css">
+        ul>li{
+        font-size:14pt;
+        line-height:20px;
+        }
+
+
+    </style>
+</head>
+<body>
+{% include "top.html" %}
+<p>欢迎自己学习django 这是个美好的世界</p>
+<a href="{%url 'demo_page'%}">点击这里调到demo</a>
+<a href="{%url 'ubox_page'%}">点击这里调到ubox</a>
+
+
+    <h5>加入一个变量进去</h5>
+    <ul style="list-style:none">
+        {% for i in list %}
+        <li style="color:green">{{i}}</li>
+        {% endfor %}
+    </ul>
+
+{% include "end.html" %}
+
+</body>
+</html>
