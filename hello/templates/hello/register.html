@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
 </head>
 <body>
-$END$
+<h1>这是个注册页面register</h1>
+<form method="post" enctype="multipart/form-data" action="{% url 'formaction' %}">
+    {% csrf_token %}
+    <input type="hidden" name="uid" value="0">
+    <input type="text" name="username" value=""><br/><br/>
+    <input type="file" name="headimg" value=""><br/><br/>
+    <input type="button" value="OK">
+</form>
+
 </body>
 </html>

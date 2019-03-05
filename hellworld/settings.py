@@ -75,8 +75,15 @@ WSGI_APPLICATION = 'hellworld.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
+        'ENGINE':'django.db.backends.mysql',
+        'NAME':'tomxu',
+        'USER':'root',
+        'PASSWORD':"root",
+        'HOST':'localhost',
+        'PORT':'3308',
     }
 }
 
@@ -102,16 +109,18 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
+#LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh_Hans'#进行汉化处理
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+#TIME_ZONE = 'UTC'
+TINE_ZONE='Asia/Shanghai' #设置为中国时区
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+#USE_TZ = True
+USE_TZ=False  #设置数据库时间和当前时间一致
 
 
 # Static files (CSS, JavaScript, Images)

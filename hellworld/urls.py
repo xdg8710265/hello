@@ -19,24 +19,27 @@ Including another URLconf
 # urlpatterns = [
 #     path('admin/', admin.site.urls),
 # ]
-
+from django.contrib import admin
 from django.conf.urls import url
 from hello import views
 from django.urls import re_path,path
-
+from django.urls import include
 urlpatterns = [
 
-    url(r'^$', views.index),
-    url(r'^index$',views.index),
-    url(r'^tomxu', views.tomxu),
-    url(r'^demo$',views.demo,name='demo_page'),
-    url(r'^demo/page=\d+$',views.demo),
-    path("home", views.home,name='home_page'),
-    url(r'^date/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2}).html$',views.home1),
-    url(r'^test$',views.test),
-    url(r'^ubox$',views.ubox,name='ubox_page'),
-    url(r'^base$',views.base),
-    url(r'page1/$',views.page1),
-    url(r'mpage',views.mpage),
+    # url(r'^$', views.index),
+    # url(r'^index/$',views.index),
+    # url(r'^tomxu', views.tomxu),
+    # url(r'^demo$',views.demo,name='demo_page'),
+    # url(r'^demo/page=\d+$',views.demo),
+    # path("home", views.home,name='home_page'),
+    # url(r'^date/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2}).html$',views.home1),
+    # url(r'^test$',views.test),
+    # url(r'^ubox$',views.ubox,name='ubox_page'),
+    # url(r'^base$',views.base),
+    # url(r'page1/$',views.page1),
+    # url(r'save',views.testdb)
+    path('admin/', admin.site.urls),
+    path(r"hello/",include("hello.urls")),
+
 
 ]

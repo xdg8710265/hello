@@ -14,7 +14,11 @@
 </head>
 <body>
 <div>
-    <input type="text" name="value" placeholder="输入框">
+<form type="">
+    <input type="text" name="value" placeholder="输入框"></br>
+</form>
+	
+	
     <p>{{name}}</p>
     <p>{{age}}</p>
     <p>{{city}}</p>
@@ -22,6 +26,8 @@
     <h1>
        <p>china</p>
     </h1>
+    {# 这是一个注释 #}
+    <a href="{% url 'home_page' %}">点击跳到home页面</a>
 </div>
 </body>
 </html>

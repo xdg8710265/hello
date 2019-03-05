@@ -13,10 +13,10 @@
     </style>
 </head>
 <body>
-{% include "top.html" %}
+{% include "hello/top.html" %}
 <p>欢迎自己学习django 这是个美好的世界</p>
-<a href="{%url 'demo_page'%}">点击这里调到demo</a>
-<a href="{%url 'ubox_page'%}">点击这里调到ubox</a>
+<a href="{% url 'demo_page'%}">点击这里调到demo</a>
+<a href="{% url 'ubox_page'%}">点击这里调到ubox</a>
 
 
     <h5>加入一个变量进去</h5>
@@ -26,7 +26,7 @@
         {% endfor %}
     </ul>
 
-{% include "end.html" %}
+{% include "hello/end.html" %}
 
 </body>
 </html>
