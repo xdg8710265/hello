@@ -28,7 +28,7 @@ class Person(models.Model):
 #创建一个用户表
 class cus(models.Model):
     user=models.CharField(max_length=50,verbose_name='用户名')
-    psw=models.CharField(max_length=40,verbose_name='密码')
+    psw=models.CharField(max_length=255,verbose_name='密码')
     mail=models.CharField(max_length=50,verbose_name='邮箱')
 
     def __str__(self):

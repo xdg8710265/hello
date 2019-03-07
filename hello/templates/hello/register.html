@@ -2,17 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>注册页面</title>
 </head>
 <body>
-<h1>这是个注册页面register</h1>
-<form method="post" enctype="multipart/form-data" action="{% url 'formaction' %}">
+<h1>这里是注册页面</h1>
+<form method="post"  action="{% url 'register_page' %}">
     {% csrf_token %}
-    <input type="hidden" name="uid" value="0">
-    <input type="text" name="username" value=""><br/><br/>
-    <input type="file" name="headimg" value=""><br/><br/>
-    <input type="button" value="OK">
+    用户名：<input type="text" name="username" value="" required="required" id="username">*{{res}}<br/><br/>
+    密码：<input type="password" name="pass" value="" required="required" id="password">*<br/><br/>
+    邮箱：<input type="text" name="mail" id="mail">*<br/><br/>
+    <input type="submit" value="注册">
 </form>
+<a href="{% url 'login_page' %}">去登录</a><br/><a href="{% url 'index' %}">回首页</a>
 
 </body>
 </html>

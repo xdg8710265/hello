@@ -6,14 +6,15 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns =[
-   url(r'^$', views.index),
+   url(r'^$', views.index,name="index"),
    url(r'^index',views.tomxu),
    url(r'demo',views.demo,name='demo_page'),
    url(r'^home/$',views.home,name='home_page'),
    url(r'^home/page=\d+$',views.home),
    url(r'ubox',views.ubox,name='ubox_page'),
    url(r'^date/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/(?P<day>[0-9]{1,2}).html$',views.home1),
-   url(r'^register$',views.register),
+   url(r'register',views.register,name="register_page"),
+   url(r'login',views.login,name='login_page'),
    url(r'^top$',views.top),
    url(r'listdb',views.listdb),
    url(r'update',views.update_listdb),
@@ -28,4 +29,8 @@ urlpatterns =[
    url("get_dict",views.get_dict),
    url('get_data',views.get_data),
    url(r'^json_data$',views.json_data),
+   url(r'test_user',views.test_user),
+   url(r'result_user',views.result_user),
+   url(r'email',views.name),
+
 ]

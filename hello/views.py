@@ -8,6 +8,7 @@ from django.forms import Form
 from django.http import JsonResponse
 from django.core import serializers
 from django.forms.models import model_to_dict
+from django.contrib.auth.hashers import make_password,check_password
 
 #获取json 数据格式
 def get_json(request):
@@ -40,11 +41,51 @@ def get_data(request):
     c=models.cus.objects.all().values()
     data['values']=list(c)
     return JsonResponse(data,safe=False)
+#网站首页
 def index(request):
-    return HttpResponse("welcome to my world!!!")
+    return render(request,'hello/index.html')
 #注册页面显示
 def register(request):
-    return render(request,'hello/register.html')
+    res=""
+    if request.method =="POST":
+        user=request.POST.get("username")
+        passwd=request.POST.get('pass')
+        mail=request.POST.get("mail")
+        user_list=models.cus.objects.filter(user=user)
+        if user_list:
+            res="用户已被注册"
+            return render(request,'hello/register.html',{"res":res})
+        else:
+            res="%s用户名可以使用"%user_list
+            cus=models.cus()
+            cus.user=user
+            #对密码进行加密存储
+            cus.psw=passwd
+            cus.mail=mail
+            cus.save()
+            return render(request,'hello/login.html',{"res":res})
+
+    return render(request, 'hello/register.html')
+
+#登录功能
+def  login(request):
+    res=''
+    if request.method=='POST':
+        user=request.POST.get("username")
+        passwd=request.POST.get('pass')
+
+        ret=models.cus.objects.filter(user=user,psw=passwd).first()
+        #对密码进行解密处理
+        #is_pass_wd=check_password(passwd,ret.psw)
+
+        if ret:
+            return HttpResponse("登录成功")
+        else:
+            return HttpResponse("用户名或密码错误")
+
+    if request.method=="GET":
+        return render(request,'hello/login.html')
+
 
 def top(request):
     data={"name":"xudegui","city":'shangrao'}
@@ -130,7 +171,6 @@ def select_listdb(request):
     #m=models.List.objects.get(id=1).list
     #n=models.List.objects.all()
     e=models.List.objects.filter(id=2)
-
     return HttpResponse("THIS IS %s"%e)
 
 #新增数据显示
@@ -182,4 +222,46 @@ def first_end(request):
     ret=models.cus.objects.all().order_by("-mail").first()
     a=ret.mail
     return HttpResponse("返回的结果：%s"%a)
+
+#测试账户提交功能
+def test_user(request):
+    #请求页面
+    return render(request,'hello/get_demo.html')
+
+def result_user(request):
+    #返回结果
+    if request.method == 'GET':
+        #获取提取数据
+        r = request.GET.get('user',None) #当key_value不存在时不会报错
+        res = ''
+        try:
+            if int(r) %2==0:
+                res = "大吉大利！"
+            else:
+                res = "恭喜发财！"
+        except:
+            res = "请输入正确的账户"
+        return HttpResponse("测试结果显示:%s"%res)
+    else:
+        render(request,'hell/get_demo.html')
+
+#提交方式和数据库关联，操作数据库
+
+def name(request):
+    res = ''
+    if request.method == 'GET':
+        n = request.GET.get('user',None)
+        res =  models.cus.objects.filter(user='%s' %n)
+        try:
+            res = res[0].mail
+        except:
+            res = '未查询到数据'
+        return render(request,'hello/name.html',{'mail':res})
+    else:
+        return render(request,'hello/name.html',{'mail':res})
+
+
+
+
+
 
