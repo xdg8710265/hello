@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>修改密码页面</title>
 </head>
 <body>
 
+<form method="post" action="{% url 'reset' %}">
+    {% csrf_token %}
+    用户名：<input type="text" name="username" required="required"><br/>
+    密 码：<input type="password" name="pass" required="required"><br/>
+    新密码：<input type="password" name="newpass" required="required"><br/>
+    <input type="submit" value="修改密码">
+</form>
+<a href="{% url 'login_page' %}">跳转到登录页面</a>
+<h4>{{msg}}</h4>
 </body>
 </html>

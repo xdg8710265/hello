@@ -32,5 +32,6 @@ urlpatterns =[
    url(r'test_user',views.test_user),
    url(r'result_user',views.result_user),
    url(r'email',views.name),
+   url(r'reset',views.reset_psw,name="reset"),
 
 ]

@@ -80,12 +80,48 @@ def  login(request):
 
         if ret:
             return HttpResponse("登录成功")
+
         else:
-            return HttpResponse("用户名或密码错误")
+            res="用户名或者密码错误"
+            return render(request, 'hello/login.html',{"res":res})
 
     if request.method=="GET":
         return render(request,'hello/login.html')
+#修改密码
+def reset_psw(request):
+    '''修改密码'''
+    ret=''
+    if request.method=='GET':
+        return render(request,'hello/reset_psw.html',{'msg':ret})
 
+    if request.method=='POST':
+        uname=request.POST.get('username')
+        opsw=request.POST.get('pass')
+        newpsw=request.POST.get('newpass')
+
+        if opsw==newpsw:
+            res="新密码和旧密码不能相同"
+            return render(request,'hello/reset_psw.html')
+        else:
+            cusname=models.cus.objects.filter(user=uname)
+            if not cusname:
+                ret="%s用户名不存在"%uname
+                return render(request,'hello/reset_psw.html',{'msg':ret})
+            else:
+                '''注册过判断密码是否正确'''
+                cusname=models.cus.objects.filter(user=uname).first()
+                if opsw==cusname.psw:
+                    cus1=models.cus()
+                    cus1.psw=newpsw
+                    cus1.save()
+                    ret="密码修改成功"
+                else:
+                    ret='密码修改失败'
+                return render(request, 'hello/reset_psw.html', {'msg': ret})
+
+
+
+    return render(request,'hello/reset_psw.html')
 
 def top(request):
     data={"name":"xudegui","city":'shangrao'}
