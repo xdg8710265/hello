@@ -33,5 +33,8 @@ urlpatterns =[
    url(r'result_user',views.result_user),
    url(r'email',views.name),
    url(r'reset',views.reset_psw,name="reset"),
+   #url(r'mail',views.mail),
+   url(r'mass_mail',views.mass_mail),
+   url(r'file_mail',views.file_mail),
 
 ]

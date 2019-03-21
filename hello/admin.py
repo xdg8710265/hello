@@ -39,11 +39,17 @@ class ControArticle(admin.ModelAdmin):
     #按时间分层
     date_hierarchy = 'create_time'
 
+class ControBank(admin.ModelAdmin):
+    list_display = ('bank_name','city',"point")
 
 
+class ControCardInfo(admin.ModelAdmin):
+    list_display=("card_id",'card_name','info')
 
     
 #将数据库加载到后台
+admin.site.register(models.Bank,ControBank)
+admin.site.register(models.CardInfo,ControCardInfo)
 admin.site.register(models.cus,ControCus)
 admin.site.register(models.List)
 admin.site.register(models.Article,ControArticle)

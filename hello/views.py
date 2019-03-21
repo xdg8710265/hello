@@ -9,6 +9,9 @@ from django.http import JsonResponse
 from django.core import serializers
 from django.forms.models import model_to_dict
 from django.contrib.auth.hashers import make_password,check_password
+from django.core.mail import send_mail,send_mass_mail
+import os
+from django.core.mail import EmailMessage
 
 #获取json 数据格式
 def get_json(request):
@@ -33,8 +36,6 @@ def json_data(request):
     ret = models.cus.objects.all().values()
     data['data']=list(ret)
     return JsonResponse(data,safe=False,json_dumps_params={'ensure_ascii':False})
-
-
 #将values转换为list
 def get_data(request):
     data={}
@@ -66,6 +67,75 @@ def register(request):
             return render(request,'hello/login.html',{"res":res})
 
     return render(request, 'hello/register.html')
+#发送邮件
+
+def mail(request):
+    '''发送html格式邮件'''
+    h = '''
+       <!DOCTYPE HTML>
+       <html>
+       <head>
+           <meta charset="UTF-8">
+           <title>带图片的邮件</title>
+       </head>
+       <body>
+       <a href="https://yuedu.baidu.com/ebook/902224ab27fff705cc1755270722192e4536582b" target="_blank">
+           <p>pytest教程,点图片进入：<br>
+           <img src="https://img2018.cnblogs.com/blog/1070438/201902/1070438-20190228112918941-704279799.png" height="160" width="270" />
+           </p></a>
+       <p>
+       其它图片：<br>
+       <img src="http://www.w3school.com.cn/i/eg_chinarose.jpg" height=150 width=300/></p>
+       <p>请注意，插入动画图像的语法与插入普通图像的语法没有区别。</p>
+       </body>
+       </html>
+       '''
+
+    send_mail('发送邮件标题',  #邮件标题
+              '这是需要的邮件内容显示', #邮件内容
+              '308774117@qq.com', #发送邮箱号
+             # ['253575877@qq.com','648250773@qq.com'],
+              ['xudegui@ubox.cn'], #接收邮箱号
+              fail_silently=False,
+              html_message=h)  #发送的html
+
+    return HttpResponse("邮件发送成功，收不到就到垃圾邮箱接收")
+
+#实现多个邮件发送
+def mass_mail(request):
+    '''发送多个邮件'''
+    message1 = (
+        '邮件标题1',
+        '邮件内容1',
+        '308774117@qq.com',
+        ['253575877@qq.com']
+    )
+    message2 = (
+        '邮件标题2',
+        '邮件内容2',
+        '308774117@qq.com',
+        ['xudegui@ubox.cn']
+    )
+    send_mass_mail((message1,message2),fail_silently=False)
+    return HttpResponse("可以发送两份不同的邮件给不同的人哦")
+#发送带附件的邮件
+def file_mail(request):
+    '''发送邮件'''
+    email =  EmailMessage(
+        '邮件主题：hello',#邮件主题
+        '我是邮件发送的主题',#邮件主题
+        '308774117@qq.com',#发送者地址
+        ['253575877@qq.com'],
+        ['xudegui@ubox.cn'],#抄送人
+        reply_to=['253575877@qq.com'],
+        headers={'Message-ID':'foo'},
+    )
+    cur=os.path.dirname(os.path.relpath(__file__))
+    filepath=os.path.join(cur,'templates','03.jpg')
+    email.attach_file(filepath,mimetype=None)
+    email.send()
+    return HttpResponse("可以发送附件，查看中。。。")
+
 
 #登录功能
 def  login(request):
@@ -100,8 +170,8 @@ def reset_psw(request):
         newpsw=request.POST.get('newpass')
 
         if opsw==newpsw:
-            res="新密码和旧密码不能相同"
-            return render(request,'hello/reset_psw.html')
+            ret="新密码和旧密码不能相同"
+            return render(request,'hello/reset_psw.html',{"msg":ret})
         else:
             cusname=models.cus.objects.filter(user=uname)
             if not cusname:

@@ -39,6 +39,16 @@ INSTALLED_APPS = [
     'hello',
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_SSL = True        # SSL加密方式
+EMAIL_HOST = 'smtp.qq.com'   # 发送邮件的邮箱 的 SMTP服务器，这里用了163邮箱
+EMAIL_PORT = 465    # SMTP服务器端口
+EMAIL_HOST_USER = '308774117@qq.com'   # 发件人
+EMAIL_HOST_PASSWORD = 'glxnxwfwvvdebieh'   # 密码(这里使用的是授权码)
+EMAIL_FROM = 'xudegui<308774117@qq.com>'   # 邮件显示的发件人
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
