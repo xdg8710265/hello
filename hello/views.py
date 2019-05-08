@@ -61,11 +61,11 @@ def register(request):
             cus=models.cus()
             cus.user=user
             #对密码进行加密存储
-            cus.psw=passwd
+            cus.psw=make_password(passwd)
+            #cus.psw=passwd  不加密操作
             cus.mail=mail
             cus.save()
             return render(request,'hello/login.html',{"res":res})
-
     return render(request, 'hello/register.html')
 #发送邮件
 
@@ -143,18 +143,14 @@ def  login(request):
     if request.method=='POST':
         user=request.POST.get("username")
         passwd=request.POST.get('pass')
-
         ret=models.cus.objects.filter(user=user,psw=passwd).first()
         #对密码进行解密处理
         #is_pass_wd=check_password(passwd,ret.psw)
-
         if ret:
             return HttpResponse("登录成功")
-
         else:
             res="用户名或者密码错误"
             return render(request, 'hello/login.html',{"res":res})
-
     if request.method=="GET":
         return render(request,'hello/login.html')
 #修改密码
@@ -163,12 +159,10 @@ def reset_psw(request):
     ret=''
     if request.method=='GET':
         return render(request,'hello/reset_psw.html',{'msg':ret})
-
     if request.method=='POST':
         uname=request.POST.get('username')
         opsw=request.POST.get('pass')
         newpsw=request.POST.get('newpass')
-
         if opsw==newpsw:
             ret="新密码和旧密码不能相同"
             return render(request,'hello/reset_psw.html',{"msg":ret})
@@ -189,8 +183,6 @@ def reset_psw(request):
                     ret='密码修改失败'
                 return render(request, 'hello/reset_psw.html', {'msg': ret})
 
-
-
     return render(request,'hello/reset_psw.html')
 
 def top(request):
@@ -206,64 +198,65 @@ def demo(request):
 
     return render(request,'hello/demo.html',data)
 
-
+#页面跳转
 def page(request,num):
     try:
         num = int(num)
         return render(request,'hello/demo.html')
     except:
         raise Http404
-
+#新手home页面登录
 def home(request):
     content={"list":['a','b','c']}
     return render(request,'hello/home.html',content)
-
+#home1页面设置变量登录
 def home1(request,year,month,day):
     return HttpResponse("Today is %s-%s-%s "%(year,month,day))
-
-
+#这是个测试的页面
 def test(request):
     data={}
     data['name']="hello"
     data['test']='world'
     data['age']=18
     return render(request,"hello/test.html",data)
-
-
+#这是个测试的页面
 def ubox(request):
     data={}
     data['name']="ubox"
     data['city']="shenzhen"
     data['age']=2018
     return render(request,'hello/ubox.html',data)
-
+#页面跳转
 def base(request):
     data={}
     data['time']=time.strftime("%Y-%m-%d %H:%M:%S")
     return render(request,'hello/base.html',data)
-
+#测试页面
 def page1(request):
     data={"name":"xudegui","city":"shangrao","time":time.strftime("%Y-%m-%d %H:%M:%S")}
     return render(request,'hello/page1.html',data)
 
+#添加数据正确
 def testdb(request):
     test1=models.Test.objects.create(name="xudegui222")
     test1.save()
     return HttpResponse("数据库信息添加成功")
 
+#数据存储
 def listdb(request):
     #向数据库添加数据，能否正常显示
     list1=models.List.objects.create(list="ubox")
     list1.save()
     return HttpResponse("列表信息添加成功")
+
 #修改数据表的信息
 def update_listdb(request):
     # list2=models.List.objects.get(list='xdg111')
     # list2.list="xdg"
     # list2.save()
     li=models.List.objects.filter(id=2).update(list='ubox22')
-
     return HttpResponse("修改成功！！！%s"%li)
+
 #删除数据库信息
 def dele_listdb(request):
     #进行数据删除的操作
@@ -271,6 +264,7 @@ def dele_listdb(request):
     # list3.delete()
     models.List.objects.all().delete()
     return HttpResponse("删除成功！！！")
+
 #查询数据表信息
 def select_listdb(request):
     #查询第一条数据

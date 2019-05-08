@@ -38,18 +38,28 @@ class ControArticle(admin.ModelAdmin):
     list_filter = ('auth','title',)
     #按时间分层
     date_hierarchy = 'create_time'
-
+#将银行卡表显示在后台
 class ControBank(admin.ModelAdmin):
     list_display = ('bank_name','city',"point")
-
-
+#将信息卡表加载到后台
 class ControCardInfo(admin.ModelAdmin):
     list_display=("card_id",'card_name','info')
+#将作者表加载到后台
+class ControAuther(admin.ModelAdmin):
+    list_display = ["name",'mail','city']#将书籍表加载到后台
+class ControBook(admin.ModelAdmin):
+    list_display = ['book_name','作者']
+    def 作者(self, obj):
+       return [a.name for a in obj.auth.all()]
 
-    
+
 #将数据库加载到后台
 admin.site.register(models.Bank,ControBank)
 admin.site.register(models.CardInfo,ControCardInfo)
 admin.site.register(models.cus,ControCus)
 admin.site.register(models.List)
 admin.site.register(models.Article,ControArticle)
+admin.site.register(models.Auther,ControAuther)
+admin.site.register(models.Book,ControBook)
+
+
